@@ -26,6 +26,7 @@
         .then(products=>{
             console.log(products);
             const container=document.getElementById("products");
+            container.innerHTML="";
             console.log(container);
             products.foreach(pd=>{
                 const para=createElement("p");//paragraph element create korse

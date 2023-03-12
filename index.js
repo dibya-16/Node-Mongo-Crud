@@ -29,7 +29,7 @@ async function run() {
     //get products
     app.get('/products',async(req,res)=>{
       const query = {};
-      const cursor = productCollection.find(query);
+      const cursor = productCollection.find(query);//.find(query).limit(4) ebhabe just 4 tah dekhabo emn fix korte pari 
       const products = await cursor.toArray();
       res.send(products);
       
@@ -90,7 +90,7 @@ app.listen(port, () =>{
 })
 
 
-//////////////////////////////////////////////////
+/////////////////////Old Version/////////////////////////////
 
 {/*
 const express = require('express');
@@ -115,8 +115,8 @@ client.connect(err => {
   const productCollection = client.db("organicdb").collection("products");
   
   app.get('/products', (req, res) => {
-    productCollection.find({})
-    .toArray( (err, documents) =>{
+    productCollection.find({})//.find({}).limit(4) ebhabe just 4 tah dekhabo emn fix korte pari 
+    .toArray( (err, documents) =>{//err=error
       res.send(documents);
     })
   })
