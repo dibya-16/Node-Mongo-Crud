@@ -1,24 +1,25 @@
 const express=require('express');
-const cors = require("cors");
-//const bodyParser=require("body-parser");
+//const cors = require("cors");//eta use hobe jokhn different folder er moddhe connection korbo.tokhn middleware hishabe use hobe
+const bodyParser=require("body-parser");
 const { MongoClient, ServerApiVersion,ObjectId } = require('mongodb');
 const app=express();
 const port=process.env.PORT || 5000;
-//app.use(bodyParser.json());
+
 //app.use(bodyParser.urlencoded({extended:false}));//form theke post korle eta use korte hoy
 //password="A4YE7cwH2o7DQhgB";
 
 
 //middleware
-app.use(cors());
+//app.use(cors());
 app.use(express.json());
+app.use(bodyParser.json());
 
 app.get('/',(req,res)=>{ 
     //res.send("My new mongo db project");
     res.sendFile(__dirname+"/index.html")
 })
 
-const uri = "mongodb+srv://newUser:A4YE7cwH2o7DQhgB@cluster0.guhkckm.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://rs:rsm2@cluster0.guhkckm.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 
@@ -29,13 +30,13 @@ async function run() {
     //get products
     app.get('/products',async(req,res)=>{
       const query = {};
-      const cursor = productCollection.find(query);//.find(query).limit(4) ebhabe just 4 tah dekhabo emn fix korte pari 
+      const cursor = productCollection.find(query)//.find(query).limit(4) ebhabe just 4 tah dekhabo emn fix korte pari 
       const products = await cursor.toArray();
       res.send(products);
       
   })
   //load products in update
-  app.get("/loadProduct/:id",async(req,res){
+  app.get("/loadProduct/:id",async(req,res)=>{
     const id = req.params.id;
     const query = {_id: ObjectId(id)};
     const result = await productCollection.findOne(query);
